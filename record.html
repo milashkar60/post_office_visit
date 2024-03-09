@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paitent Record</title>
+
+</head>
+<body>
+Patient record html goes here
+<button id="connect">Connect</button>
+
+<script>
+    // Add a click event handler to the button
+    document.getElementById("connect").addEventListener("click", function() {
+            fetch('http://localhost:3000/connect', {
+                method: 'GET'
+            })
+            .then(response => {
+				console.log(response);
+				return response.json()
+			})
+            .then(data => {
+				alert(JSON.stringify(data));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>

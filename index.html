@@ -1,23 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Form</title>
+    <title>Login</title>
+	
+	
+	<style>
+		body {
+			text-align: center;
+		}
+		
+		#logo {
+			margin: 0px auto;
+			display: inline;
+		}
+		
+		#intro {
+			text-align: center;
+			font-size: 16px;
+			font-style: italic;
+		}
+		
+		#loginForm {
+			margin: 20px auto;
+			width: 400px;
+		}
+		
+		#message {
+			width: 400px;
+			margin: 10px auto;
+			display: none;
+		}
+		
+		#loginForm label {
+			width: 80px;
+			text-align: left;
+			display: inline-block;
+		}
+		
+		#loginForm input {
+			margin-left: 20px;
+		}
+		
+		#loginForm button {
+			margin-top: 30px;
+		}
+		
+		#loginForm > div {
+			margin-top: 10px;
+		}
+	</style>
 </head>
 <body>
-
-    <h2>Login Form</h2>
-
+	<img id="logo" src="images/Doc_IT.png" title="Some image" />
+	
+	<div id="intro">
+		Our Technology performs fast diagnosis and its consensus algorithm enables staggering results.
+	</div>
+	
+	<div id="message"></div>
+	
     <form id="loginForm">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <button type="submit">Login</button>
+		<div>
+			<label for="username">Username:</label>
+			<input type="text" id="username" name="username">
+        </div>
+		<div>
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="password">
+        </div>
+		<button type="submit">Login</button>
     </form>
 
     <p id="message"></p>
 
     <script>
+		const username = document.getElementById("username");
+		const password = document.getElementById("password");
+		
+		username.focus();
+		
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -35,9 +96,18 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('message').innerText = data.ok ? "Success" : "Failed";
-				if (data.ok) document.location.href="http://yahoo.com";
-				else alert("failed!");
+                //document.getElementById('message').innerText = data.ok ? "Success" : "Failed";
+				if (data.ok) document.location.href="record.html";
+				else {
+					let message = document.getElementById("message");
+					message.style="display: block; color: red";
+					message.textContent = "Invalid login credentials";
+					
+					username.value = "";
+					password.value = "";
+					
+					username.focus();
+				}
             })
             .catch(error => {
                 console.error('Error:', error);

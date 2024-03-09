@@ -19,5 +19,10 @@ def login():
     else:
         return jsonify({'ok': False}), 401
 	
+@app.route('/connect', methods=['GET'])
+def connectToModel():
+	print("Do something here to connect to model")
+    return jsonify({'somekey': "somevalue"})
+	
 if __name__ == '__main__':
     app.run(port=3000)
