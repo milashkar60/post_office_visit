@@ -14,7 +14,7 @@ def login():
 
     # Perform authentication logic here
     # For demonstration purposes, let's just return a success message
-    if username == 'admin' and password == 'admin':
+    if username == 'nurse123' and password == 'password':
         return jsonify({'ok': True})
     else:
         return jsonify({'ok': False}), 401
@@ -22,7 +22,7 @@ def login():
 @app.route('/connect', methods=['GET'])
 def connectToModel():
 	print("Do something here to connect to model")
-    return jsonify({'somekey': "somevalue"})
+	return jsonify({'somekey': 'somevalue'})
 	
 if __name__ == '__main__':
     app.run(port=3000)

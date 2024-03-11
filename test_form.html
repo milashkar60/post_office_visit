@@ -6,9 +6,9 @@
 	<style>
 		/* Style for the container */
 		.container {
-			display: flex;
+			
 			justify-content: space-between;
-			width: 600px;
+			width: 300px;
 			margin: 5;
 		}
 
@@ -18,18 +18,19 @@
 			padding: 20px;
 			margin: 10px;
 			float: left;
+			width: 250px
 		}
 
 		 /* Style for the left column */
-		.left-column {
-        flex: 1;
+		.left-container {
+			display: flex;
+			flex-direction: column;
     	}
 
     	/* Style for the right column */
-   		.right-column {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+   		.right-container {
+			display: flex;	
+			flex-direction: row;		
     	}
 
 		/* Style for labels */
@@ -64,24 +65,29 @@
 </head>
 <body>
 
-	<div id="date"></div>
+<div id="date"></div>
+<p></p>
 	
-	<div class="container">
-		<div class="frame" align=left>
+<div class="container">
+	<div class="left-container">
+		<div class="frame">
 			<input type="text" id="search" placeholder="Enter patient First and Last name">
 			<button>Search</button>
 		</div>
-	</div>
-		
-	<div class="container">
+	<!--</div> -->
+	
+
+
+<!-- <div class="container"> -->
+	<!--<div class="left-container">		 -->
 		<div class="frame">
 			<div>
 				<label for="profile"></label>
 			</div>
-			<img src="images/profile.png" title="profile" />
+			<img src="images/profile.png" title="profile"/>
 		</div>
-	</div>
-	<div class="container">
+	<!--</div> -->
+	
 		<div class="frame">
 			<div>
 				<label for="info" style="font-weight: bold;">Patient Information</label>
@@ -98,31 +104,49 @@
 				<label for="mrnum_name">Medical Record #: </label>
 				<label for="mrnum"></label>
 			</div>
-		</div>		
-	</div>
-	<div class="container">
+		</div>
+	
+<!--		<div class="first-column">  -->
 		<div class="frame">
 			<div>
 				<label for="history_name" style="font-weight: bold;">Patient Medical History</label>
-				<label for="history"></label>
+				<textarea id="history"></textarea>
 			</div>
-
-		</div>
-	</div>
-	
-	<div class="container" style="float: top;">
-		<div class="frame">
-			<label for="vital_name" style="font-weight: bold;">Vital Measurements</label>
-			<p></p>
-			<label for="bl_press_name">Blood Pressure</label>
-			<label for="pressure"></label>
-
-			<label for="pulse_name">Pulse</label>
-			<label for="pulse"></label>
 		</div>
 	</div>	
-	
+
+	<div class="right-container"> 
+		<div class="frame">
+				<label for="vital_name" style="font-weight: bold;">Vital Measurements</label>
+				<p></p>
+				<label for="bl_press_name">Blood Pressure:</label>
+				<label for="pressure"></label>
+				
+				<label for="pulse_name">Pulse:</label>
+				<label for="pulse"></label>
+		</div>		
+
+		<div class="frame">
+				<label for="sympt_name" style="font-weight: bold;">Symptoms</label>
+				<p></p>
+				<textarea id="symptoms"></textarea>
+		</div>	
+
+		<div class="frame">
+				<label for="med_name" style="font-weight: bold;">Medications</label>
+				<p></p>
+				<label for="medications"></label>
+		</div>		
+
+		<div class="frame">
+				<label for="instr_name" style="font-weight: bold;">Instructions</label>
+				<p></p>
+				<label for="instructions"></label>
+		</div>		
+	</div>	
 		
+		
+</div>	
 
 	<script>
 		function loadForm() {
@@ -139,7 +163,7 @@
 			var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // January is 0!
 			var year = currentDate.getFullYear();
 			var dateString = month + '/' + day + '/' + year;
-			document.getElementById('date').textContent = dateString;
+			document.getElementById('date').textContent = 'Last Update: '+dateString;
 		}
 		
 		displayDate();
