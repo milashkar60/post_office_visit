@@ -259,6 +259,13 @@
 	}
 
 	function handleSearch() {
+		const searchInput = document.getElementById('search');
+		var inputValue = searchInput.value.trim();
+		if (inputValue.trim() === "") {
+			alert('Please add patient First and Last name.');
+			return;
+		}
+
 		const patientName = document.getElementById('patient_name');
 		const patientAge = document.getElementById('patient_age');
 		const patientGender = document.getElementById('patient_gender');
@@ -270,24 +277,24 @@
 		patientName.textContent = 'John Doe';
 		
 		// patient information
-		patientAge.textContent = '35';
+		patientAge.textContent = '34';
 		patientGender.textContent = 'M';
-		patientDOB.textContent = '01/01/1985';
-		patientMedicalNumber.textContent = '1234567890';
+		patientDOB.textContent = '09/20/1987';
+		patientMedicalNumber.textContent = '123-45-6789';
 		
 		// medical history
-		medicalHistory.textContent = 'Patient has a history of high blood pressure and diabetes.';
+		medicalHistory.textContent = "No past complications in the past. Both mother's and father's side of the family have a history of migraines and high blood pressure";
 
 		// vital measurements
 		const vitalsText = document.getElementById('vitals_text');
 		const vitals = [
 			{
 				key: 'Blood Pressure',
-				value: '120/80'
+				value: '118/78'
 			},
 			{
 				key: 'Pulse',
-				value: '72'
+				value: '70'
 			}
 		];
 		vitalsText.textContent = '';
@@ -303,9 +310,9 @@
 		// symptoms
 		const symptomsText = document.getElementById('symptoms_text');
 		const symptoms = [
-			'Headache',
+			'Ranmdom headache',
 			'Fatigue',
-			'Nausea'
+			'Lack of sleep'
 		];
 		symptomsText.textContent = '';
 		let symptomDetails = '';
@@ -317,8 +324,7 @@
 		// medications
 		const medicationsText = document.getElementById('medications');
 		const medications = [
-			'Aspirin',
-			'Insulin'
+			'None'
 		];
 		medicationsText.textContent = '';
 		let medicationDetails = '';
@@ -333,7 +339,9 @@
 
 		// visit reason
 		const reasonText = document.getElementById('reason_text');
-		reasonText.textContent = 'Patient is experiencing severe headache and nausea.';
+		reasonText.textContent = "The patient came in for their annual checkk-up but has been experiencing frequent headaches. " + 
+		"The pain has become frequent and has started to affect the patient's everyday life. Sometimes sleeping helps. " +
+		"Otherwise, no other symptoms have been experience.";
 
 		loadedPatient = true;
 	}
