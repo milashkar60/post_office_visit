@@ -3,46 +3,22 @@
 <head>
     <title>Paitent Record</title>
 
-	<style>
-		/* Style for the container */
-		.container {
-			display: flex;
-			justify-content: space-between;
-			width: 600px;
-			margin: 5;
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			font-size: 12px;
 		}
 
-		/* Style for the frame */
-		.frame {
-			border: 1px solid #ccc;
-			padding: 20px;
-			margin: 10px;
-			float: left;
-		}
-
-		 /* Style for the left column */
-		.left-column {
-        flex: 1;
-    	}
-
-    	/* Style for the right column */
-   		.right-column {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    	}
-
-		/* Style for labels */
+    	/* Style for labels */
 		label {
 			display: block;
 			margin-bottom: 5px;
+			float: left;
 		}
 
-		/* Style for text inputs */
-		input[type="text"] {
-			width: 100%;
-			padding: 5px;
-			margin-bottom: 10px;
+		textarea {
+			width: 20px; 
+			height: 20px;
 		}
 
 		/* Style for buttons */
@@ -60,108 +36,317 @@
 			font-size: 18px;
 			margin-bottom: 20px;
 		}
+
+		.flex {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.left_column {
+			width: 25%;
+		}
+		.contents {
+			width: 74%;
+			margin: 0 0 0 1%;
+		}
+
+		.patient_search input[type="text"] {
+			width: 70%;
+			margin: 0 10px 0 0;
+		}
+
+		.rounded {
+			border: solid 1px #ccc;
+			border-radius: 8px;
+			padding: 10px;
+			box-shadow: 0 5px 5px rgba(0, 0, 0, .35);
+			margin-bottom: 10px;
+		}
+
+		.patient_information .details .label {
+			font-weight: bold;
+			width: 50%;
+			margin: 4px 0 0 0;
+		}
+
+		.patient_information .details .value {
+			width: 50%;
+			text-align: right;
+			margin: 4px 0 0 0;
+		}
+
+		.toolbar .section {
+			width: 22%;
+			height: 100px;
+		}
+
+		.visit_reason {
+			height: 185px;
+		}
+
+		.summary {
+			height: 200px;
+		}
+		
+		.patient_profile {
+			text-align: center;
+		}
+
+		.patient_profile img {
+			width: 100px;
+			height: 100px;
+			margin: 10px 0;
+		}
+
+		.patient_medical_history {
+			height: 110px;
+		}
+
+		.summary {
+			position: relative;
+		}
+		#message_doc {
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+		}
+		#summary_text {
+			height: 130px;
+		}
+		#reason_text {
+			height: 150px;
+		}
+
+		.scroll {
+			overflow-y: scroll;
+		}
+		#medical_history {
+			height: 80px;
+		}
 	</style>
 </head>
 <body>
 
-	<div id="date"></div>
-	
-	<div class="container">
-		<div class="frame" align=left>
-			<input type="text" id="search" placeholder="Enter patient First and Last name">
-			<button>Search</button>
-		</div>
-	</div>
-		
-	<div class="container">
-		<div class="frame">
-			<div>
-				<label for="profile"></label>
-			</div>
-			<img src="images/profile.png" title="profile" />
-		</div>
-	</div>
-	<div class="container">
-		<div class="frame">
-			<div>
-				<label for="info" style="font-weight: bold;">Patient Information</label>
-				<p> </p>
-				<label for="age_name">Age:</label>
-				<label for="age"></label>
-
-				<label for="gend_name">Gender:</label>
-				<label for="gender"></label>
-
-				<label for="dob_name">DOB:</label>
-				<label for="dob"></label>
-
-				<label for="mrnum_name">Medical Record #: </label>
-				<label for="mrnum"></label>
-			</div>
-		</div>		
-	</div>
-	<div class="container">
-		<div class="frame">
-			<div>
-				<label for="history_name" style="font-weight: bold;">Patient Medical History</label>
-				<label for="history"></label>
+	<div id="date" style="text-align: right; margin-bottom: 10px;"></div>
+	<div class="container flex">
+		<div class="left_column">
+			<div class="patient_search flex rounded">
+				<input type="text" id="search" placeholder="Enter patient First and Last name">
+				<button onclick="handleSearch()">Search</button>
 			</div>
 
+			<div class="patient_profile rounded">
+				<h3 id="patient_name">[Patient Name]</h3>
+				<img src="images/profile.png" title="profile" />
+			</div>	
+
+			<div class="patient_information rounded">
+				<div style="font-weight: bold; margin-bottom: 10px">
+					Patient Information
+				</div>
+				<div class="details flex">
+					<div class="label">Age</div>
+					<div class="value" id="patient_age">[Age]</div>
+				</div>	
+				<div class="details flex">
+					<div class="label">Gender</div>
+					<div class="value" id="patient_gender">[Gender]</div>
+				</div>	
+				<div class="details flex">
+					<div class="label">Date of Birth</div>
+					<div class="value" id="patient_dob">[DOB]</div>
+				</div>	
+				<div class="details flex">
+					<div class="label">Medical Record Number</div>
+					<div class="value" id="patient_medical_number">[Number]</div>
+				</div>	
+			</div>
+
+			<div class="patient_medical_history rounded">
+				<div style="font-weight: bold; margin-bottom: 10px;">
+					Patient/Medical History
+				</div>
+				<div id="medical_history" class="scroll">
+					[Medical History]
+				</div>
+			</div>
+		</div>
+		<div class="contents">
+			<div class="flex toolbar">
+				<div class="rounded section vitals">
+					<div style="font-weight: bold; margin-bottom: 10px;">
+						Vital Measurements
+					</div>
+					<div id="vitals_text" class="scroll">
+						[Vitals]
+					</div>
+				</div>	
+
+				<div class="symptoms section rounded">
+					<div style="font-weight: bold; margin-bottom: 10px;">
+						Symptoms
+					</div>
+					<div id="symptoms_text" class="scroll">
+						[Symptoms]
+					</div>
+				</div>	
+
+				<div class="medications section rounded">
+					<div style="font-weight: bold; margin-bottom: 10px;">
+						Medications
+					</div>
+					<div id="medications" class="scroll">
+						[Medications]
+					</div>
+				</div>	
+
+				<div class="Instructions section rounded">
+					<div style="font-weight: bold; margin-bottom: 10px;">
+						Instructions
+					</div>
+					<div id="instructions" class="scroll">
+						[Instructions]
+					</div>
+				</div>
+			</div>
+
+			<div class="visit_reason rounded">
+				<div style="font-weight: bold; margin-bottom: 10px;">
+					Visit Reason
+				</div>
+				<div id="reason_text" class="scroll">
+					[Visit Reason]
+				</div>
+			</div>
+
+			<div class="summary rounded">
+				<div style="font-weight: bold; margin-bottom: 10px;">
+					Summary
+				</div>
+				<div id="summary_text" class="scroll">
+					[Summary]
+				</div>
+
+				<button id="message_doc" onclick="getDocAnswer();">Message Doc.IT</button>
+			</div>	
 		</div>
 	</div>
-	
-	<div class="container" style="float: top;">
-		<div class="frame">
-			<label for="vital_name" style="font-weight: bold;">Vital Measurements</label>
-			<p></p>
-			<label for="bl_press_name">Blood Pressure</label>
-			<label for="pressure"></label>
-
-			<label for="pulse_name">Pulse</label>
-			<label for="pulse"></label>
-		</div>
-	</div>	
-	
-		
-
-	<script>
-		function loadForm() {
-			const searchValue = document.getElementById("search");
-			const medHistory = ''
-			const reload = true;
-			if (searchValue == 'Joe Smith' ) 
-				document.getElementById('profile').textContent = searchValue;
-		}
-		
-		function displayDate() {
-			var currentDate = new Date();
-			var day = String(currentDate.getDate()).padStart(2, '0');
-			var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // January is 0!
-			var year = currentDate.getFullYear();
-			var dateString = month + '/' + day + '/' + year;
-			document.getElementById('date').textContent = dateString;
-		}
-		
-		displayDate();
-							
-		// Add a click event handler to the button
-		document.getElementById("connect").addEventListener("click", function() {
-				fetch('http://localhost:3000/connect', {
-					method: 'GET'
-				})
-				.then(response => {
-					console.log(response);
-					return response.json()
-				})
-				.then(data => {
-					alert(JSON.stringify(data));
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				});
-		});
-		
-		
-	</script>
 </body>
+<script>
+	let loadedPatient = false;
+	function getDocAnswer() {
+		if (!loadedPatient) {
+			alert('Please search for a patient first.');
+			return;
+		}
+		const summaryText = document.getElementById('summary_text');
+		fetch('http://localhost:3000/connect', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: ''
+		})
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
+			summaryText.textContent = data.advice;
+		})
+		.catch(error => {
+			console.error(error);
+			summaryText.textContent = 'Error occurred while trying to connect to Doc.IT';
+		});
+	}
+
+	function handleSearch() {
+		const patientName = document.getElementById('patient_name');
+		const patientAge = document.getElementById('patient_age');
+		const patientGender = document.getElementById('patient_gender');
+		const patientDOB = document.getElementById('patient_dob');
+		const patientMedicalNumber = document.getElementById('patient_medical_number');
+		const medicalHistory = document.getElementById('medical_history');
+
+		// patient name
+		patientName.textContent = 'John Doe';
+		
+		// patient information
+		patientAge.textContent = '35';
+		patientGender.textContent = 'M';
+		patientDOB.textContent = '01/01/1985';
+		patientMedicalNumber.textContent = '1234567890';
+		
+		// medical history
+		medicalHistory.textContent = 'Patient has a history of high blood pressure and diabetes.';
+
+		// vital measurements
+		const vitalsText = document.getElementById('vitals_text');
+		const vitals = [
+			{
+				key: 'Blood Pressure',
+				value: '120/80'
+			},
+			{
+				key: 'Pulse',
+				value: '72'
+			}
+		];
+		vitalsText.textContent = '';
+		let details = '';
+		vitals.forEach(vital => {
+			details+= `<div class="details flex" style="margin-bottom: 4px; border-bottom: dashed 1px; border-color: #ccc;">
+				<div class="label">${vital.key}</div>
+				<div class="value">${vital.value}</div>
+			</div>`;
+		});
+		vitalsText.innerHTML = details;
+
+		// symptoms
+		const symptomsText = document.getElementById('symptoms_text');
+		const symptoms = [
+			'Headache',
+			'Fatigue',
+			'Nausea'
+		];
+		symptomsText.textContent = '';
+		let symptomDetails = '';
+		symptoms.forEach(symptom => {
+			symptomDetails+= `<li>${symptom}</li>`;
+		});
+		symptomsText.innerHTML = symptomDetails;
+
+		// medications
+		const medicationsText = document.getElementById('medications');
+		const medications = [
+			'Aspirin',
+			'Insulin'
+		];
+		medicationsText.textContent = '';
+		let medicationDetails = '';
+		medications.forEach(medication => {
+			medicationDetails+= `<li>${medication}</li>`;
+		});
+		medicationsText.innerHTML = medicationDetails;
+
+		// instructions
+		const instructionsText = document.getElementById('instructions');
+		instructionsText.textContent = 'Painkillers';
+
+		// visit reason
+		const reasonText = document.getElementById('reason_text');
+		reasonText.textContent = 'Patient is experiencing severe headache and nausea.';
+
+		loadedPatient = true;
+	}
+
+	function displayDate() {
+		var currentDate = new Date();
+		var day = String(currentDate.getDate()).padStart(2, '0');
+		var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // January is 0!
+		var year = currentDate.getFullYear();
+		var dateString = month + '/' + day + '/' + year;
+		document.getElementById('date').textContent = 'Last Update: '+ dateString;
+	}
+
+	displayDate();
+</script>
 </html>

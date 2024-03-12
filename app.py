@@ -19,10 +19,16 @@ def login():
     else:
         return jsonify({'ok': False}), 401
 	
-@app.route('/connect', methods=['GET'])
+@app.route('/connect', methods=['POST'])
 def connectToModel():
 	print("Do something here to connect to model")
-	return jsonify({'somekey': 'somevalue'})
+    
+    # add code here to connect to AI model
+    # return a JSON object with key 'advice' and 'value' whatever you is returned from the model
+
+	return jsonify({
+        'advice': 'slkdjslkfjsljfdslkjfflk'
+    })
 	
 if __name__ == '__main__':
     app.run(port=3000)
