@@ -1,130 +1,130 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Paitent Record</title>
+	<head>
+		<title>Paitent Record</title>
 
-    <style>
-		body {
-			font-family: Arial, sans-serif;
-			font-size: 12px;
-		}
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				font-size: 12px;
+			}
 
-    	/* Style for labels */
-		label {
-			display: block;
-			margin-bottom: 5px;
-			float: left;
-		}
+			/* Style for labels */
+			label {
+				display: block;
+				margin-bottom: 5px;
+				float: left;
+			}
 
-		textarea {
-			width: 20px; 
-			height: 20px;
-		}
+			textarea {
+				width: 20px; 
+				height: 20px;
+			}
 
-		/* Style for buttons */
-		button {
-			padding: 8px 16px;
-			background-color: #007bff;
-			color: #fff;
-			border: none;
-			cursor: pointer;
-		}
+			/* Style for buttons */
+			button {
+				padding: 8px 16px;
+				background-color: #007bff;
+				color: #fff;
+				border: none;
+				cursor: pointer;
+			}
 
-		/* Style for date element */
-		#currentDate {
-			text-align: center;
-			font-size: 18px;
-			margin-bottom: 20px;
-		}
+			/* Style for date element */
+			#currentDate {
+				text-align: center;
+				font-size: 18px;
+				margin-bottom: 20px;
+			}
 
-		.flex {
-			display: flex;
-			justify-content: space-between;
-		}
+			.flex {
+				display: flex;
+				justify-content: space-between;
+			}
 
-		.left_column {
-			width: 25%;
-		}
-		.contents {
-			width: 74%;
-			margin: 0 0 0 1%;
-		}
+			.left_column {
+				width: 25%;
+			}
+			.contents {
+				width: 74%;
+				margin: 0 0 0 1%;
+			}
 
-		.patient_search input[type="text"] {
-			width: 70%;
-			margin: 0 10px 0 0;
-		}
+			.patient_search input[type="text"] {
+				width: 70%;
+				margin: 0 10px 0 0;
+			}
 
-		.rounded {
-			border: solid 1px #ccc;
-			border-radius: 8px;
-			padding: 10px;
-			box-shadow: 0 5px 5px rgba(0, 0, 0, .35);
-			margin-bottom: 10px;
-		}
+			.rounded {
+				border: solid 1px #ccc;
+				border-radius: 8px;
+				padding: 10px;
+				box-shadow: 0 5px 5px rgba(0, 0, 0, .35);
+				margin-bottom: 10px;
+			}
 
-		.patient_information .details .label {
-			font-weight: bold;
-			width: 50%;
-			margin: 4px 0 0 0;
-		}
+			.patient_information .details .label {
+				font-weight: bold;
+				width: 50%;
+				margin: 4px 0 0 0;
+			}
 
-		.patient_information .details .value {
-			width: 50%;
-			text-align: right;
-			margin: 4px 0 0 0;
-		}
+			.patient_information .details .value {
+				width: 50%;
+				text-align: right;
+				margin: 4px 0 0 0;
+			}
 
-		.toolbar .section {
-			width: 22%;
-			height: 100px;
-		}
+			.toolbar .section {
+				width: 22%;
+				height: 100px;
+			}
 
-		.visit_reason {
-			height: 185px;
-		}
+			.visit_reason {
+				height: 185px;
+			}
 
-		.summary {
-			height: 200px;
-		}
-		
-		.patient_profile {
-			text-align: center;
-		}
+			.summary {
+				height: 200px;
+			}
+			
+			.patient_profile {
+				text-align: center;
+			}
 
-		.patient_profile img {
-			width: 100px;
-			height: 100px;
-			margin: 10px 0;
-		}
+			.patient_profile img {
+				width: 100px;
+				height: 100px;
+				margin: 10px 0;
+			}
 
-		.patient_medical_history {
-			height: 110px;
-		}
+			.patient_medical_history {
+				height: 110px;
+			}
 
-		.summary {
-			position: relative;
-		}
-		#message_doc {
-			position: absolute;
-			bottom: 10px;
-			right: 10px;
-		}
-		#summary_text {
-			height: 130px;
-		}
-		#reason_text {
-			height: 150px;
-		}
+			.summary {
+				position: relative;
+			}
+			#message_doc {
+				position: absolute;
+				bottom: 10px;
+				right: 10px;
+			}
+			#summary_text {
+				height: 130px;
+			}
+			#reason_text {
+				height: 150px;
+			}
 
-		.scroll {
-			overflow-y: scroll;
-		}
-		#medical_history {
-			height: 80px;
-		}
-	</style>
-</head>
+			.scroll {
+				overflow-y: scroll;
+			}
+			#medical_history {
+				height: 80px;
+			}
+		</style>
+	</head>
 <body>
 
 	<div id="date" style="text-align: right; margin-bottom: 10px;"></div>
@@ -250,13 +250,26 @@
 		.then(response => response.json())
 		.then(data => {
 			console.log(data);
-			summaryText.textContent = data.advice;
+			summaryText.textContent = cleanData(data.advice);  
+
 		})
 		.catch(error => {
 			console.error(error);
 			summaryText.textContent = 'Error occurred while trying to connect to Doc.IT';
 		});
 	}
+
+	function cleanData(jsonString) {
+        var startInd = jsonString.indexOf('{"response":');
+        console.log(startInd);
+        var response = jsonString.slice(startInd);
+        var data = JSON.parse(response);
+        response = data.response;
+		response = response.replace(/\\n/g, '\n');
+		
+        return response;
+    }
+
 
 	function handleSearch() {
 		const searchInput = document.getElementById('search');
@@ -310,7 +323,7 @@
 		// symptoms
 		const symptomsText = document.getElementById('symptoms_text');
 		const symptoms = [
-			'Ranmdom headache',
+			'Random headache',
 			'Fatigue',
 			'Lack of sleep'
 		];
@@ -339,7 +352,7 @@
 
 		// visit reason
 		const reasonText = document.getElementById('reason_text');
-		reasonText.textContent = "The patient came in for their annual checkk-up but has been experiencing frequent headaches. " + 
+		reasonText.textContent = "The patient came in for their annual check-up but has been experiencing frequent headaches. " + 
 		"The pain has become frequent and has started to affect the patient's everyday life. Sometimes sleeping helps. " +
 		"Otherwise, no other symptoms have been experience.";
 
