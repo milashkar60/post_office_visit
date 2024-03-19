@@ -250,7 +250,7 @@
 		.then(response => response.json())
 		.then(data => {
 			console.log(data);
-			summaryText.textContent = cleanData(data.advice);  
+			summaryText.innerHTML = cleanData(data.advice);  
 
 		})
 		.catch(error => {
@@ -260,14 +260,13 @@
 	}
 
 	function cleanData(jsonString) {
-        var startInd = jsonString.indexOf('{"response":');
-        console.log(startInd);
+        var startInd = jsonString.indexOf('{"response":');        
         var response = jsonString.slice(startInd);
         var data = JSON.parse(response);
         response = data.response;
-		response = response.replace(/\\n/g, '\n');
-		
-        return response;
+		response = response.replace(/\n/g, '<br>');
+
+		return response;
     }
 
 
@@ -352,10 +351,10 @@
 
 		// visit reason
 		const reasonText = document.getElementById('reason_text');
-		reasonText.textContent = "The patient came in for their annual check-up but has been experiencing frequent headaches. " + 
-		"The pain has become frequent and has started to affect the patient's everyday life. Sometimes sleeping helps. " +
+		reasonText.innerHTML = "The patient came in for their annual check-up but has been experiencing frequent headaches. <br>" + 
+		"The pain has become frequent and has started to affect the patient's everyday life. Sometimes sleeping helps. <br>" +
 		"Otherwise, no other symptoms have been experience.";
-
+	
 		loadedPatient = true;
 	}
 
