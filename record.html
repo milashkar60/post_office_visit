@@ -85,7 +85,7 @@
 			}
 
 			.summary {
-				height: 200px;
+				height: 250px;
 			}
 			
 			.patient_profile {
@@ -111,7 +111,7 @@
 				right: 10px;
 			}
 			#summary_text {
-				height: 130px;
+				height: 200px;
 			}
 			#reason_text {
 				height: 150px;
@@ -252,6 +252,7 @@
 			console.log(data);
 			summaryText.innerHTML = cleanData(data.advice);  
 
+
 		})
 		.catch(error => {
 			console.error(error);
@@ -353,7 +354,7 @@
 		const reasonText = document.getElementById('reason_text');
 		reasonText.innerHTML = "The patient came in for their annual check-up but has been experiencing frequent headaches. <br>" + 
 		"The pain has become frequent and has started to affect the patient's everyday life. Sometimes sleeping helps. <br>" +
-		"Otherwise, no other symptoms have been experience.";
+		"Otherwise, no other symptoms have been experienced.";
 	
 		loadedPatient = true;
 	}
